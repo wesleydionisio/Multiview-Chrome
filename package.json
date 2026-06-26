@@ -1,0 +1,13 @@
+{
+  "name": "multiview-chrome",
+  "version": "1.0.0",
+  "description": "Extensao Chrome MV3 para montar uma sala propria com ate 4 videos/lives do YouTube em iframes independentes.",
+  "main": "content-script.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}

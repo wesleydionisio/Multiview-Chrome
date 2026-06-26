@@ -1,0 +1,157 @@
+:root {
+  --control-room: #0b0d10;
+  --panel: #15181d;
+  --panel-raised: #1d2228;
+  --border: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --text: #f4f7fb;
+  --text-soft: #aeb7c2;
+  --text-muted: #77818d;
+  --live-red: #ff3b3b;
+  --focus-cyan: #52e0ff;
+  --danger: #ff6b6b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 340px;
+  margin: 0;
+  color: var(--text);
+  background: var(--control-room);
+  font: 13px/1.45 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.popup-shell {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+}
+
+.popup-header h1 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.popup-header p {
+  min-height: 36px;
+  margin: 8px 0 0;
+  color: var(--text-soft);
+}
+
+.action-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.primary-action,
+.secondary-action,
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  background: var(--panel-raised);
+  cursor: pointer;
+}
+
+.primary-action {
+  min-height: 42px;
+  gap: 9px;
+  border-color: rgba(82, 224, 255, 0.36);
+  color: #041015;
+  background: var(--focus-cyan);
+  font-weight: 700;
+}
+
+.secondary-action {
+  min-height: 40px;
+  gap: 9px;
+}
+
+.primary-action:disabled {
+  border-color: var(--border);
+  color: var(--text-muted);
+  background: #171a1f;
+  cursor: not-allowed;
+}
+
+.primary-action:not(:disabled):hover,
+.secondary-action:hover,
+.icon-button:hover {
+  filter: brightness(1.08);
+}
+
+.manual-form {
+  display: grid;
+  gap: 7px;
+}
+
+.manual-form label {
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 38px;
+  gap: 8px;
+}
+
+.input-row input {
+  min-width: 0;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 11px;
+  color: var(--text);
+  background: #0f1216;
+  outline: none;
+}
+
+.input-row input:focus {
+  border-color: rgba(82, 224, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(82, 224, 255, 0.12);
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+}
+
+.icon,
+svg {
+  width: 17px;
+  height: 17px;
+}
+
+svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.message {
+  min-height: 18px;
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.message.error {
+  color: var(--danger);
+}

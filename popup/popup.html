@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multiview Room</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="./popup.css">
+  </head>
+  <body>
+    <main class="popup-shell">
+      <header class="popup-header">
+        <div>
+          <h1>Multiview Room</h1>
+          <p id="currentStatus">Procurando video na aba atual...</p>
+        </div>
+      </header>
+
+      <section class="action-stack" aria-label="Acoes da sala">
+        <button id="addCurrent" class="primary-action" type="button" disabled>
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+          Adicionar live atual
+        </button>
+
+        <form id="manualForm" class="manual-form">
+          <label for="youtubeUrl">URL do YouTube</label>
+          <div class="input-row">
+            <input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
+            <button class="icon-button" type="submit" aria-label="Adicionar URL">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </form>
+
+        <button id="openRoom" class="secondary-action" type="button">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zM12 6v12M4 12h16"/></svg>
+          </span>
+          Abrir sala
+        </button>
+      </section>
+
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </main>
+
+    <script type="module" src="./popup.js"></script>
+  </body>
+</html>

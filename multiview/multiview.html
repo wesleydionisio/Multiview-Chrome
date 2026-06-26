@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multiview Room</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="./multiview.css">
+  </head>
+  <body>
+    <main class="room-shell">
+      <header class="room-toolbar" aria-label="Controles da sala">
+        <div class="brand-lockup">
+          <span class="live-dot" aria-hidden="true"></span>
+          <h1>Multiview Room</h1>
+        </div>
+
+        <form id="addSourceForm" class="add-source-form">
+          <input id="sourceUrl" type="url" placeholder="Cole uma URL do YouTube" autocomplete="off" aria-label="URL do YouTube">
+          <button class="toolbar-button primary" type="submit" title="Adicionar video">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Adicionar</span>
+          </button>
+        </form>
+
+        <nav class="toolbar-actions" aria-label="Audio e sala">
+          <button id="muteAll" class="icon-command" type="button" title="Mutar todos">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM16 9l5 5M21 9l-5 5"/></svg>
+          </button>
+          <button id="clearRoom" class="icon-command danger" type="button" title="Limpar sala">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M8 10v8M12 10v8M16 10v8M5 6l1 16h12l1-16"/></svg>
+          </button>
+        </nav>
+      </header>
+
+      <section id="grid" class="multiview-grid count-0" aria-label="Videos da sala"></section>
+
+      <section id="emptyState" class="empty-state">
+        <div class="empty-symbol" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zM12 6v12M4 12h16"/></svg>
+        </div>
+        <h2>Adicione ate 4 lives</h2>
+        <p>Cole uma URL do YouTube ou use o popup da extensao em uma aba do YouTube.</p>
+      </section>
+    </main>
+
+    <script type="module" src="./multiview.js"></script>
+  </body>
+</html>

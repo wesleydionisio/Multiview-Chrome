@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Multiview YouTube Relay</title>
+    <style>
+      html,
+      body,
+      #player {
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: #000;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #000;
+      }
+
+      .error {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        color: #f5f8fb;
+        background: #050608;
+        font: 14px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="player"></main>
+
+    <script>
+      const YOUTUBE_EMBED_ORIGIN = "https://www.youtube-nocookie.com";
+      const VIDEO_ID_PATTERN = /^[a-zA-Z0-9_-]{11}$/;
+      const params = new URLSearchParams(window.location.search);
+      const videoId = params.get("v") || params.get("videoId") || "";
+      const parentOrigin = params.get("parentOrigin") || "";
+      const playerMount = document.querySelector("#player");
+      const pendingCommands = [];
+      let iframe = null;
+      let isReady = false;
+
+      if (!VIDEO_ID_PATTERN.test(videoId)) {
+        playerMount.innerHTML = '<section class="error">VideoId invalido.</section>';
+      } else {
+        iframe = document.createElement("iframe");
+        iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+        iframe.title = "YouTube player";
+        iframe.addEventListener("load", () => {
+          isReady = true;
+          flushCommands();
+        });
+
+        const playerParams = new URLSearchParams({
+          autoplay: params.get("autoplay") || "1",
+          mute: params.get("mute") || "1",
+          playsinline: "1",
+          enablejsapi: "1",
+          origin: window.location.origin,
+          rel: "0"
+        });
+
+        iframe.src = `${YOUTUBE_EMBED_ORIGIN}/embed/${videoId}?${playerParams.toString()}`;
+        playerMount.append(iframe);
+      }
+
+      window.addEventListener("message", (event) => {
+        if (parentOrigin && event.origin !== parentOrigin) return;
+
+        const message = event.data;
+        if (!message || message.type !== "MULTIVIEW_PLAYER_COMMAND") return;
+
+        command(message.func, Array.isArray(message.args) ? message.args : []);
+      });
+
+      function command(func, args) {
+        if (!iframe || !func) return;
+
+        if (!isReady) {
+          pendingCommands.push({ func, args });
+          return;
+        }
+
+        iframe.contentWindow.postMessage(JSON.stringify({
+          event: "command",
+          func,
+          args
+        }), YOUTUBE_EMBED_ORIGIN);
+      }
+
+      function flushCommands() {
+        const commands = pendingCommands.splice(0);
+        for (const { func, args } of commands) {
+          command(func, args);
+        }
+      }
+    </script>
+  </body>
+</html>
